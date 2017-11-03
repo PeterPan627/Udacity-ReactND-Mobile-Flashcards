@@ -14,6 +14,8 @@ class DeckListItem extends Component {
 const styles = StyleSheet.create({
   deckItem: {
     backgroundColor: '#ddd',
+    marginTop: 10,
+    padding: 5
   }
 });
 
