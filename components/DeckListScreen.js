@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import DeckListItem from '../DeckListItem';
+import DeckListItem from './DeckListItem';
 
 // temporary fake data
 const fakeDecks = [
