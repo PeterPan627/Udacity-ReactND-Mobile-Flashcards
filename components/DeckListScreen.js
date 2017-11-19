@@ -4,20 +4,23 @@ import DeckListItem from './DeckListItem';
 
 // temporary fake data
 const fakeDecks = [
-  { key: 'ONE' },
-  { key: 'TWO' },
-  { key: 'THREE' },
-  { key: 'FOUR' },
-  { key: 'FIVE' },
+  { title: 'ONE', cards: 2 },
+  { title: 'TWO', cards: 7 },
+  { title: 'THREE', cards: 111 },
+  { title: 'FOUR', cards: 12 },
+  { title: 'FIVE', cards: 22 },
 ];
 
 class DeckListScreen extends Component {
+  _keyExtractor = (item, index) => index;
+
   render() {
     return (
       <FlatList 
         style={styles.deckList}
         data={fakeDecks}
-        renderItem={({ item }) => <DeckListItem key={item.key} deck={item.key} />}
+        keyExtractor={this._keyExtractor}
+        renderItem={({ item }) => <DeckListItem deck={item} />}
       />
     );
   }
@@ -27,7 +30,8 @@ const styles = StyleSheet.create({
   deckList: {
     flex: 1,
     alignSelf: 'stretch',
-    padding: 5
+    marginTop: 5,
+    padding: 10
   }
 });
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { Constants } from 'expo'
-import { blue, blueDark, white } from './utils/colors';
+import { blue, blueDark, blueHighlight, white } from './utils/colors';
 import DeckListScreen from './components/DeckListScreen';
 import AddDeckScreen from './components/AddDeckScreen';
 import AddCardScreen from './components/AddCardScreen';
@@ -36,7 +36,7 @@ const Tabs = TabNavigator({
     header: null
   },
   tabBarOptions: {
-    activeTintColor: white,
+    activeTintColor: blueHighlight,
     style: {
       height: 50,
       backgroundColor: blue,
