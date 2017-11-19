@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import { blue, blueHighlight, white } from '../utils/colors';
 
 class DeckListItem extends Component {
   render() {
     return (
-      <View style={styles.deckItem}>
-        <Text style={styles.deckTitle}>{this.props.deck.title}</Text>
-        <Text style={styles.cardNumber}>Cards: {this.props.deck.cards}</Text>
-      </View>
+      <TouchableWithoutFeedback
+        onPress={this.props.navigateToDeck}
+      >
+        <View style={styles.deckItem}>
+          <Text style={styles.deckTitle}>{this.props.deck.title}</Text>
+          <Text style={styles.cardNumber}>Cards: {this.props.deck.cards}</Text>
+        </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -22,6 +26,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     shadowOffset: { width: 10, height: 10 },
     shadowColor: 'black',
+    shadowRadius: 6,
     shadowOpacity: 1,
     elevation: 3
   },

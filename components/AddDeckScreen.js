@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, TextInput, StyleSheet } from 'react-native';
 import Button from './Button';
 
 class AddDeckScreen extends Component {

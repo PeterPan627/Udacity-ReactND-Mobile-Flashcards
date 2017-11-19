@@ -12,7 +12,16 @@ const fakeDecks = [
 ];
 
 class DeckListScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.navigateToDeck = this.navigateToDeck.bind(this);
+  }
+
   _keyExtractor = (item, index) => index;
+
+  navigateToDeck() {
+    this.props.navigation.navigate('IndividualDeck');
+  }
 
   render() {
     return (
@@ -20,7 +29,12 @@ class DeckListScreen extends Component {
         style={styles.deckList}
         data={fakeDecks}
         keyExtractor={this._keyExtractor}
-        renderItem={({ item }) => <DeckListItem deck={item} />}
+        renderItem={({ item }) => (
+          <DeckListItem 
+            deck={item} 
+            navigateToDeck={this.navigateToDeck} 
+          />
+        )}
       />
     );
   }
