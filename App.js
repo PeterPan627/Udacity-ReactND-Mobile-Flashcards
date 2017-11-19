@@ -24,7 +24,7 @@ const Tabs = TabNavigator({
       topBarLabel: 'Decks'
     }
   },
-  AddDeck: {
+  Add: {
     screen: AddDeckScreen,
     navigationOptions: {
       topBarLabel: 'Add New Deck'

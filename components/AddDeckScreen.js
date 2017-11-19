@@ -17,7 +17,9 @@ class AddDeckScreen extends Component {
           onChangeText={(text) => this.setState({ title: text })}
           value={this.state.title}
         />
-        <Button text='Create Deck'/>
+        <View style={styles.buttonWrapper}>
+          <Button text='Create Deck'/>
+        </View>
       </View>
     );
   }
@@ -25,10 +27,17 @@ class AddDeckScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 15,
+    flex: 1,
+    padding: 20,
+    justifyContent: 'flex-start',
   },
   titleInput: {
-    padding: 10
+    padding: 10,
+    marginTop: 35,
+    marginBottom: 10
+  },
+  buttonWrapper: {
+    alignItems: "center"
   }
 });
 
