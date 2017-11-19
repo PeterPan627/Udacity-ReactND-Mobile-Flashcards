@@ -1,5 +1,4 @@
-export const candyAppleRed = '#d90429';
-export const pantoneRed = '#ef233c';
-export const grayBlue = '#8d99ae';
-export const gunmetal = '#2b2d42';
-export const antiFlashWhite = '#edf2f4';
+export const blue = '#2962ff';
+export const blueDark = '#0039cb';
+export const blueLight = '#768fff';
+export const white = '#edf2f4';

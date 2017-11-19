@@ -1,12 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation'
-import { grayBlue, candyAppleRed } from './utils/colors';
+import { Constants } from 'expo'
+import { blue, blueDark, white } from './utils/colors';
 import DeckListScreen from './components/DeckListScreen';
 import AddDeckScreen from './components/AddDeckScreen';
 import AddCardScreen from './components/AddCardScreen';
 import IndividualDeckScreen from './components/IndividualDeckScreen';
 import QuizScreen from './components/QuizScreen';
+
+function AppStatusBar ({backgroundColor, ...props}) {
+  return (
+    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
+      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
+    </View>
+  )
+}
 
 const Tabs = TabNavigator({
   Decks: {
@@ -27,10 +36,10 @@ const Tabs = TabNavigator({
     header: null
   },
   tabBarOptions: {
-    activeTintColor: candyAppleRed,
+    activeTintColor: white,
     style: {
       height: 50,
-      backgroundColor: grayBlue,
+      backgroundColor: blue,
       shadowColor: 'rgba(0, 0, 0, 0.4)',
       shadowOffset: {
         width: 0,
@@ -49,9 +58,9 @@ const MainNavigator = StackNavigator({
   IndividualDeck: {
     screen: IndividualDeckScreen,
     navigationOptions: {
-      headerTintColor: candyAppleRed,
+      headerTintColor: white,
       headerStyle: {
-        backgroundColor: grayBlue,
+        backgroundColor: blue
       }
     }
   }
@@ -61,7 +70,7 @@ export default class App extends React.Component {
   render() {
     return (
       <View style={{flex: 1}}>
-        <View style={{height: 100, backgroundColor: 'black'}}></View>
+        <AppStatusBar backgroundColor={blueDark}/>
         <MainNavigator/>
       </View>
     );
@@ -71,5 +80,5 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1
-  },
+  }
 });
