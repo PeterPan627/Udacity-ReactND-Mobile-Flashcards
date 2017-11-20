@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
+import { saveDeckTitle } from '../utils/api';
 import Button from './Button';
 
 class AddDeckScreen extends Component {
@@ -18,7 +19,7 @@ class AddDeckScreen extends Component {
           value={this.state.title}
         />
         <View style={styles.buttonWrapper}>
-          <Button text='Create Deck'/>
+          <Button text='Create Deck' func={saveDeckTitle}/>
         </View>
       </View>
     );

@@ -51,18 +51,28 @@ const Tabs = TabNavigator({
   }
 });
 
+const navigationOptions = {
+  headerTintColor: white,
+  headerStyle: {
+    backgroundColor: blue
+  }
+};
+
 const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs
   },
   IndividualDeck: {
     screen: IndividualDeckScreen,
-    navigationOptions: {
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: blue
-      }
-    }
+    navigationOptions
+  },
+  Quiz: {
+    screen: QuizScreen,
+    navigationOptions
+  },
+  AddCard: {
+    screen: AddCardScreen,
+    navigationOptions
   }
 });
 

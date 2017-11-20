@@ -4,6 +4,20 @@ import { gray } from '../utils/colors';
 import Button from './Button';
 
 class IndividualDeckScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.startQuiz = this.startQuiz.bind(this);
+    this.addCard = this.addCard.bind(this);
+  }
+
+  startQuiz() {
+    this.props.navigation.navigate('Quiz');
+  }
+
+  addCard() {
+    this.props.navigation.navigate('AddCard');
+  }
+  
   render() {
     return (
       <View style={styles.deckCard}>
@@ -12,8 +26,8 @@ class IndividualDeckScreen extends Component {
           <Text style={styles.cardNumber}>This deck has X cards</Text>
         </View>
         <View>
-          <Button text='Start Quiz'/>
-          <Button text='Add Card'/>
+          <Button text='Start Quiz' func={this.startQuiz}/>
+          <Button text='Add Card' func={this.addCard}/>
         </View>
       </View>
     );
