@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'space-around',
     alignItems: 'center',
-    margin: 15,
+    margin: 25,
     padding: 25,
     backgroundColor: gray,
     shadowOffset: { width: 10, height: 10 },
