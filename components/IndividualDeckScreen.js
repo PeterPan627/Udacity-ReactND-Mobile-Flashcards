@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { pantoneRed } from '../utils/colors';
+import { View, Text, StyleSheet } from 'react-native';
+import { gray } from '../utils/colors';
+import Button from './Button';
 
 class IndividualDeckScreen extends Component {
   render() {
     return (
       <View style={styles.deckCard}>
-        <Text>Deck Title</Text>
-        <Text>Number of cards</Text>
-        <TouchableOpacity style={styles.button}>
-          <Text>Start Quiz</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text>Add Card</Text>
-        </TouchableOpacity>
+        <View>
+          <Text style={styles.deckTitle}>Deck Title</Text>
+          <Text style={styles.cardNumber}>This deck has X cards</Text>
+        </View>
+        <View>
+          <Button text='Start Quiz'/>
+          <Button text='Add Card'/>
+        </View>
       </View>
     );
   }
@@ -21,14 +22,27 @@ class IndividualDeckScreen extends Component {
 
 const styles = StyleSheet.create({
   deckCard: {
-    borderStyle: 'solid',
-    borderColor: 'black',
-    borderWidth: 1,
-    padding: 15
+    flex: 1,
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    margin: 15,
+    padding: 25,
+    backgroundColor: gray,
+    shadowOffset: { width: 10, height: 10 },
+    shadowColor: 'black',
+    shadowRadius: 6,
+    shadowOpacity: 1,
+    elevation: 3
   },
-  button: {
-    backgroundColor: pantoneRed,
-    margin: 5
+  deckTitle: {
+    fontSize: 23,
+    marginBottom: 5,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
+  cardNumber: {
+    fontSize: 15,
+    textAlign: 'center'
   }
 });
 

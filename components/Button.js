@@ -11,12 +11,20 @@ const Button = (props) => (
 const styles = StyleSheet.create({
   button: {
     padding: 10,
+    margin: 5,
     backgroundColor: blue,
-    width: 100
+    width: 100,
+    shadowOffset: { width: 10, height: 10 },
+    shadowColor: 'black',
+    shadowRadius: 6,
+    shadowOpacity: 1,
+    elevation: 3
   },
   buttonText: {
     color: white,
-    borderRadius: 1
+    borderRadius: 1,
+    fontWeight: 'bold',
+    textAlign: 'center'
   }
 });
 
