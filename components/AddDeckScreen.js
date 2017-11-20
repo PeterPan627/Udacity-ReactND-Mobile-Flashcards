@@ -17,7 +17,7 @@ class AddDeckScreen extends Component {
     saveDeckTitle();
 
     this.setState({ title: '' })
-    this.props.navigation.dispatch(NavigationActions.back())
+    this.props.navigation.dispatch(NavigationActions.back());
   }
 
   render() {
