@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native';
-import { gray, blueDark } from '../utils/colors';
+import { gray, blueDark, blueLight } from '../utils/colors';
 import Button from './Button';
 
 class QuizScreen extends Component {
@@ -28,28 +28,35 @@ class QuizScreen extends Component {
 
   render() {
     return (
-      <View style={styles.quizCard}>
-        {
-          this.state.show == 'question'
-          ? <Text style={styles.questionText}>Question ??</Text>
-          : <Text style={styles.answerText}>Answer</Text>
-        }
+      <View style={{ flex: 1 }}>
+        <View style={styles.quizProgress}>
+          <Text>x% Complete</Text>
+          <Text>Card 2/7</Text>
+        </View>
 
-        <TouchableWithoutFeedback
-          onPress={this.showQuestionOrAnswer}
-        >
+        <View style={styles.quizCard}>
+          {
+            this.state.show == 'question'
+            ? <Text style={styles.questionText}>Question ??</Text>
+            : <Text style={styles.answerText}>Answer</Text>
+          }
+
+          <TouchableWithoutFeedback
+            onPress={this.showQuestionOrAnswer}
+          >
+            <View>
+              {
+                this.state.show == 'question'
+                ? <Text>Show Answer</Text>
+                : <Text>Show Question</Text>
+              }
+            </View>
+          </TouchableWithoutFeedback>
+
           <View>
-            {
-              this.state.show == 'question'
-              ? <Text>Show Answer</Text>
-              : <Text>Show Question</Text>
-            }
+            <Button text='Correct' func={this.correct}/>
+            <Button text='Incorrect' func={this.incorrect}/>
           </View>
-        </TouchableWithoutFeedback>
-
-        <View>
-          <Button text='Correct' func={this.correct}/>
-          <Button text='Incorrect' func={this.incorrect}/>
         </View>
       </View>
     );
@@ -58,6 +65,12 @@ class QuizScreen extends Component {
 
 
 const styles = StyleSheet.create({
+  quizProgress: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    padding: 10,
+    backgroundColor: blueLight
+  },
   quizCard: {
     flex: 1,
     justifyContent: 'space-around',
