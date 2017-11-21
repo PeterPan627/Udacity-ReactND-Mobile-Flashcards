@@ -17,7 +17,7 @@ class AddCardScreen extends Component {
   createCard() {
     // testing
     console.log(this.state);
-    addCardToDeck();
+    addCardToDeck('Pls', this.state);
 
     this.setState({ 
       question: '',

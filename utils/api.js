@@ -30,25 +30,36 @@ const startingData = {
 // fetch all decks
 export function getDecks() {
   return AsyncStorage.getItem(STORAGE_KEY).then(result => {
-    return result !== null ? JSON.parse(result) : startingData;
+    if(result !== null) {
+      return JSON.parse(result) 
+    } else {
+      AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(startingData));
+      return startingData;
+    }
   });
 }
 
-// ?????
-export function getDeck(id) {
-  return AsyncStorage.getItem(id, (err, result) => result);
+// get single deck
+export function getDeck(title) {
+  return getDecks()
+    .then((decks) => decks[title]);
 }
 
 // save new deck
 export function saveDeckTitle(title) {
-  const saveObj = { title, questions: [] };
+  const deckObj = { title, questions: [] };
   return AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify({
-    [title]: saveObj
+    [title]: deckObj
   }));
 }
 
-// ?????
+// add a new card
 export function addCardToDeck(title, card) {
-  return;
-  // add card to a decks questions 
+  return getDecks()
+    .then((decks) => {
+      decks[title].questions.push(card);
+      AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify(decks));
+    });
 }
+
+
