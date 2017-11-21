@@ -12,12 +12,9 @@ class AddDeckScreen extends Component {
   }
 
   createDeck() {
-    // testing
-    console.log(this.state);
-    saveDeckTitle();
-
-    this.setState({ title: '' })
-    this.props.navigation.dispatch(NavigationActions.back());
+    saveDeckTitle(this.state.title);
+    this.setState({ title: '' });
+    this.props.navigation.navigate('Decks');
   }
 
   render() {

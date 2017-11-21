@@ -10,7 +10,7 @@ class DeckListItem extends Component {
       >
         <View style={styles.deckItem}>
           <Text style={styles.deckTitle}>{this.props.deck.title}</Text>
-          <Text style={styles.cardNumber}>Cards: {this.props.deck.cards}</Text>
+          <Text style={styles.cardNumber}>Cards: {this.props.deck.questions.length}</Text>
         </View>
       </TouchableWithoutFeedback>
     );
