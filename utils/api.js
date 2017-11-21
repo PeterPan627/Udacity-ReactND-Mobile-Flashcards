@@ -61,5 +61,3 @@ export function addCardToDeck(title, card) {
       AsyncStorage.mergeItem(STORAGE_KEY, JSON.stringify(decks));
     });
 }
-
-
