@@ -11,8 +11,12 @@ export default function deckReducer(state = {}, action) {
         ...action.payload
       }
     case ADD_NEW_CARD:
-      console.log(state[action.deck]);
-      console.log(action.card);
+      const updatedDeck = state[action.deck];
+      updatedDeck.questions.push(action.card);
+      return {
+        ...state,
+        [action.deck]: updatedDeck
+      };
     default:
       return state;
   }
