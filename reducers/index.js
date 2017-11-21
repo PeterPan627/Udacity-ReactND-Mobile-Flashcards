@@ -1,22 +1,16 @@
 import { combineReducers } from 'redux';
-import { GET_ALL_DECKS, SELECT_DECK } from '../actions';
+import { GET_ALL_DECKS, ADD_NEW_DECK } from '../actions';
 
-function deckReducer(state = {}, action) {
-  if(action.type === GET_ALL_DECKS) {
-    return action.payload;
+export default function deckReducer(state = {}, action) {
+  switch(action.type) {
+    case GET_ALL_DECKS:
+      return action.payload;
+    case ADD_NEW_DECK:
+      return {
+        ...state,
+        ...action.payload
+      }
+    default:
+      return state;
   }
-  return state;
 }
-
-function selectedDeckReducer(state = null, action) {
-  if(action.type === GET_ALL_DECKS) {
-    //return action.payload;
-    return state
-  }
-  return state;
-}
-
-export default combineReducers({
-  decks: deckReducer,
-  selectedDeck: selectedDeckReducer
-});

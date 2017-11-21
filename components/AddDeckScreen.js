@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { saveDeckTitle } from '../utils/api';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { addNewDeck } from '../actions';
 import Button from './Button';
 
 class AddDeckScreen extends Component {
@@ -13,6 +16,13 @@ class AddDeckScreen extends Component {
 
   createDeck() {
     saveDeckTitle(this.state.title);
+    const deckObj = {
+      [this.state.title]: {
+        title: this.state.title,
+        questions: []
+      }
+    };
+    this.props.addNewDeck(deckObj);
     this.setState({ title: '' });
     this.props.navigation.navigate('Decks');
   }
@@ -52,4 +62,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddDeckScreen;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ addNewDeck }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(AddDeckScreen);

@@ -1,7 +1,7 @@
 import { getDecks } from '../utils/api';
 
 export const GET_ALL_DECKS = 'GET_ALL_DECKS';
-export const SELECT_DECK = 'SELECT_DECK';
+export const ADD_NEW_DECK = 'ADD_NEW_DECK';
 
 export function getAllDecks() {
   return (dispatch) => {
@@ -15,6 +15,9 @@ export function getAllDecks() {
   }
 }
 
-export function selectDeck() {
-  return;
+export function addNewDeck(deck) {
+  return {
+    type: ADD_NEW_DECK,
+    payload: deck
+  }
 }

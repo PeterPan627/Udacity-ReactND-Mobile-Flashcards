@@ -22,7 +22,6 @@ class DeckListScreen extends Component {
   }
 
   render() {
-    // test
     console.log(this.props.decks)
     return (
       <FlatList 
@@ -50,7 +49,7 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state) {
-  return { decks: state.decks };
+  return { decks: state };
 }
 
 function mapDispatchToProps(dispatch) {
