@@ -1,7 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import { TabNavigator, StackNavigator } from 'react-navigation'
-import { Constants } from 'expo'
+import { Constants } from 'expo';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import reducer from './reducers';
+import ReduxThunk from 'redux-thunk';
+
 import { blue, blueDark, blueHighlight, white } from './utils/colors';
 import DeckListScreen from './components/DeckListScreen';
 import AddDeckScreen from './components/AddDeckScreen';
@@ -78,11 +83,15 @@ const MainNavigator = StackNavigator({
 
 export default class App extends React.Component {
   render() {
+    const store = createStore(reducer, {}, applyMiddleware(ReduxThunk));
+
     return (
-      <View style={{flex: 1}}>
-        <AppStatusBar backgroundColor={blueDark}/>
-        <MainNavigator/>
-      </View>
+      <Provider store={store}>
+        <View style={{flex: 1}}>
+          <AppStatusBar backgroundColor={blueDark}/>
+          <MainNavigator/>
+        </View>
+      </Provider>
     );
   }
 }

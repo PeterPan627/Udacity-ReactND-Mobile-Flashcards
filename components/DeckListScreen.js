@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { FlatList, StyleSheet } from 'react-native';
-import { getDecks } from '../utils/api';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { getAllDecks } from '../actions';
 import DeckListItem from './DeckListItem';
 
 class DeckListScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = { decks: [] };
     this.navigateToDeck = this.navigateToDeck.bind(this);
   }
 
   componentDidMount() {
-    getDecks()
-      .then(data => this.setState({ decks: data }));
+    this.props.getAllDecks();
   }
 
   _keyExtractor = (item, index) => index;
@@ -22,10 +22,12 @@ class DeckListScreen extends Component {
   }
 
   render() {
+    // test
+    console.log(this.props.decks)
     return (
       <FlatList 
         style={styles.deckList}
-        data={Object.values(this.state.decks)}
+        data={Object.values(this.props.decks)}
         keyExtractor={this._keyExtractor}
         renderItem={({ item }) => (
           <DeckListItem 
@@ -47,4 +49,12 @@ const styles = StyleSheet.create({
   }
 });
 
-export default DeckListScreen;
+function mapStateToProps(state) {
+  return { decks: state.decks };
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ getAllDecks }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(DeckListScreen); 
