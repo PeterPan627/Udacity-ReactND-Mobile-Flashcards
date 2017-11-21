@@ -17,12 +17,11 @@ class DeckListScreen extends Component {
 
   _keyExtractor = (item, index) => index;
 
-  navigateToDeck() {
-    this.props.navigation.navigate('IndividualDeck');
+  navigateToDeck(deck) {
+    this.props.navigation.navigate('IndividualDeck', { deck });
   }
 
   render() {
-    console.log(this.props.decks)
     return (
       <FlatList 
         style={styles.deckList}

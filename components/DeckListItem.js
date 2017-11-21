@@ -6,7 +6,7 @@ class DeckListItem extends Component {
   render() {
     return (
       <TouchableWithoutFeedback
-        onPress={this.props.navigateToDeck}
+        onPress={() => this.props.navigateToDeck(this.props.deck.title)}
       >
         <View style={styles.deckItem}>
           <Text style={styles.deckTitle}>{this.props.deck.title}</Text>

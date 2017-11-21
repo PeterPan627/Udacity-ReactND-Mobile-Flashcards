@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, TextInput, Text, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { saveDeckTitle } from '../utils/api';
+import { red } from '../utils/colors';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { addNewDeck } from '../actions';
@@ -10,32 +11,40 @@ import Button from './Button';
 class AddDeckScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = { title: 'Title' };
+    this.state = { 
+      title: 'Title',
+      tooShort: false
+    };
     this.createDeck = this.createDeck.bind(this);
   }
 
   createDeck() {
-    saveDeckTitle(this.state.title);
-    const deckObj = {
-      [this.state.title]: {
-        title: this.state.title,
-        questions: []
-      }
-    };
-    this.props.addNewDeck(deckObj);
-    this.setState({ title: '' });
-    this.props.navigation.navigate('Decks');
+    if(this.state.title.length > 3) {
+      saveDeckTitle(this.state.title);
+      const deckObj = {
+        [this.state.title]: {
+          title: this.state.title,
+          questions: []
+        }
+      };
+      this.props.addNewDeck(deckObj);
+      this.setState({ title: '' });
+      this.props.navigation.navigate('Decks');
+    } else {
+      this.setState({ tooShort: true })
+    }
   }
 
   render() {
     return (
       <View style={styles.container}>
+        {this.state.tooShort && <Text style={styles.error}>The deck name is too short!</Text>}
         <TextInput
           underlineColorAndroid='#2962ff'
           style={styles.titleInput}
           onChangeText={(text) => this.setState({ title: text })}
           value={this.state.title}
-          onFocus={() => this.setState({ title: '' })}
+          onFocus={() => this.setState({ title: '', tooShort: false })}
         />
         <View style={styles.buttonWrapper}>
           <Button text='Create Deck' func={this.createDeck}/>
@@ -50,6 +59,11 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: 'flex-start',
+  },
+  error: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: red
   },
   titleInput: {
     padding: 10,

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 import { gray } from '../utils/colors';
 import Button from './Button';
 
@@ -19,11 +20,12 @@ class IndividualDeckScreen extends Component {
   }
   
   render() {
+    const deck = this.props.deck;
     return (
       <View style={styles.deckCard}>
         <View>
-          <Text style={styles.deckTitle}>Deck Title</Text>
-          <Text style={styles.cardNumber}>This deck has X cards</Text>
+          <Text style={styles.deckTitle}>{deck.title}</Text>
+          <Text style={styles.cardNumber}>This deck has {deck.questions.length} cards</Text>
         </View>
         <View>
           <Button text='Start Quiz' func={this.startQuiz}/>
@@ -60,4 +62,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default IndividualDeckScreen;
+function mapStateToProps(state, ownProps) {
+  return { deck: state[ownProps.navigation.state.params.deck] };
+}
+
+export default connect(mapStateToProps)(IndividualDeckScreen);
