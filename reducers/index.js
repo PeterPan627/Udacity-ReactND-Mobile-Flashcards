@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { GET_ALL_DECKS, ADD_NEW_DECK } from '../actions';
+import { GET_ALL_DECKS, ADD_NEW_DECK, ADD_NEW_CARD } from '../actions';
 
 export default function deckReducer(state = {}, action) {
   switch(action.type) {
@@ -10,6 +10,9 @@ export default function deckReducer(state = {}, action) {
         ...state,
         ...action.payload
       }
+    case ADD_NEW_CARD:
+      console.log(state[action.deck]);
+      console.log(action.card);
     default:
       return state;
   }

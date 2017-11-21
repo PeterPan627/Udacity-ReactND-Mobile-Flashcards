@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { View, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { addCardToDeck } from '../utils/api';
+import { red } from '../utils/colors';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { addNewCard } from '../actions';
 import Button from './Button';
 
 class AddCardScreen extends Component {
@@ -9,39 +13,55 @@ class AddCardScreen extends Component {
     super(props);
     this.state = { 
       question: 'Question',
-      answer: 'Answer'
+      answer: 'Answer',
+      questionTooShort: false,
+      answerTooShort: false
     };
     this.createCard = this.createCard.bind(this);
   }
 
   createCard() {
-    // testing
-    console.log(this.state);
-    addCardToDeck('Pls', this.state);
-
-    this.setState({ 
-      question: '',
-      answer: ''
-    });
-    this.props.navigation.dispatch(NavigationActions.back());
+    if(this.state.question.length > 6 && this.state.answer.length > 3) {
+      const cardObj = {
+        question: this.state.question,
+        answer: this.state.answer
+      }
+      const deckTitle = this.props.navigation.state.params.deck;
+      addCardToDeck(deckTitle, cardObj);
+      this.props.addNewCard(deckTitle, cardObj);
+      this.setState({ 
+        question: '',
+        answer: ''
+      });
+      this.props.navigation.navigate('IndividualDeck', { deck: deckTitle });
+    } else {
+      if(this.state.question.length <= 6) {
+        this.setState({ questionTooShort: true })
+      }
+      if(this.state.answer.length <= 3) {
+        this.setState({ answerTooShort: true })
+      }
+    }
   }
 
   render() {
     return (
       <View style={styles.container}>
+        {this.state.questionTooShort && <Text style={styles.error}>The question is too short!</Text>}
         <TextInput
           underlineColorAndroid='#2962ff'
           style={styles.input}
           onChangeText={(text) => this.setState({ question: text })}
           value={this.state.question}
-          onFocus={() => this.setState({ question: '' })}
+          onFocus={() => this.setState({ question: '', questionTooShort: false })}
         />
+        {this.state.answerTooShort && <Text style={styles.error}>The answer is too short!</Text>}
         <TextInput
           underlineColorAndroid='#2962ff'
           style={styles.input}
           onChangeText={(text) => this.setState({ answer: text })}
           value={this.state.answer}
-          onFocus={() => this.setState({ answer: '' })}
+          onFocus={() => this.setState({ answer: '', answerTooShort: false })}
         />
         <View style={styles.buttonWrapper}>
           <Button text='Create Card' func={this.createCard}/>
@@ -57,6 +77,11 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: 'flex-start',
   },
+  error: {
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: red
+  },
   input: {
     padding: 10,
     marginTop: 15,
@@ -68,4 +93,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default AddCardScreen;
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ addNewCard }, dispatch);
+}
+
+export default connect(null, mapDispatchToProps)(AddCardScreen);

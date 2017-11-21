@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
 import { gray, blueDark, blueLight } from '../utils/colors';
 import Button from './Button';
 
@@ -30,7 +31,6 @@ class QuizScreen extends Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.quizProgress}>
-          <Text>x% Complete</Text>
           <Text>Card 2/7</Text>
         </View>
 
@@ -67,8 +67,8 @@ class QuizScreen extends Component {
 const styles = StyleSheet.create({
   quizProgress: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    padding: 10,
+    justifyContent: 'flex-end',
+    padding: 8,
     backgroundColor: blueLight
   },
   quizCard: {
@@ -99,4 +99,8 @@ const styles = StyleSheet.create({
   }
 });
 
-export default QuizScreen;
+function mapStateToProps(state, ownProps) {
+  return { deck: state[ownProps.navigation.state.params.deck] };
+}
+
+export default connect(mapStateToProps)(QuizScreen);

@@ -12,11 +12,11 @@ class IndividualDeckScreen extends Component {
   }
 
   startQuiz() {
-    this.props.navigation.navigate('Quiz');
+    this.props.navigation.navigate('Quiz', { deck: this.props.deck.title } );
   }
 
   addCard() {
-    this.props.navigation.navigate('AddCard');
+    this.props.navigation.navigate('AddCard', { deck: this.props.deck.title });
   }
   
   render() {
