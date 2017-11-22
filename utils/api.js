@@ -7,12 +7,12 @@ const startingData = {
     title: 'React',
     questions: [
       {
-        question: 'What is React?',
-        answer: 'A library for managing user interfaces'
+        question: 'Is React a Javascript UI library?',
+        answer: 'Correct'
       },
       {
-        question: 'Where do you make Ajax requests in React?',
-        answer: 'The componentDidMount lifecycle event'
+        question: 'Correct place to make Ajax requests is in a render method?',
+        answer: 'Incorrect'
       }
     ]
   },
@@ -20,8 +20,12 @@ const startingData = {
     title: 'JavaScript',
     questions: [
       {
-        question: 'What is a closure?',
-        answer: 'The combination of a function and the lexical environment within which that function was declared.'
+        question: 'Closure is a combination of a function and lexical environment within which that function was declared?',
+        answer: 'Yes'
+      }, 
+      { 
+        questions: 'JavaScript is considered a "weakly typed" or "untyped" language?',
+        answer: 'Correct'
       }
     ]
   }

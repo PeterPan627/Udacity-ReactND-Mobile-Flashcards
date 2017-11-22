@@ -2,12 +2,18 @@ import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { gray, blueDark, blueLight } from '../utils/colors';
+import { setLocalNotification } from './utils/notifications';
 import Button from './Button';
 
 class QuizScreen extends Component {
   constructor(props) {
     super(props);
-    this.state = { show: 'question' }
+    this.state = { 
+      questions: [],
+      currentQuestion: 0,
+      correctAnswers: 0,
+      show: 'question'
+    }
     this.showQuestionOrAnswer = this.showQuestionOrAnswer.bind(this);
   }
 
@@ -63,6 +69,10 @@ class QuizScreen extends Component {
   }
 }
 
+/*
+clearLocalNotification()
+      .then(setLocalNotification)
+*/
 
 const styles = StyleSheet.create({
   quizProgress: {
@@ -85,7 +95,7 @@ const styles = StyleSheet.create({
     elevation: 3
   },
   questionText: {
-    fontSize: 26,
+    fontSize: 22,
     marginBottom: 5,
     fontWeight: 'bold',
     textAlign: 'center'

@@ -21,7 +21,7 @@ class AddCardScreen extends Component {
   }
 
   createCard() {
-    if(this.state.question.length > 6 && this.state.answer.length > 3) {
+    if(this.state.question.length > 6 && this.state.answer.length > 1) {
       const cardObj = {
         question: this.state.question,
         answer: this.state.answer
@@ -38,7 +38,7 @@ class AddCardScreen extends Component {
       if(this.state.question.length <= 6) {
         this.setState({ questionTooShort: true })
       }
-      if(this.state.answer.length <= 3) {
+      if(this.state.answer.length <= 1) {
         this.setState({ answerTooShort: true })
       }
     }
