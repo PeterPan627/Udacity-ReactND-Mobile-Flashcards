@@ -11,11 +11,11 @@ class QuizScreen extends Component {
     this.state = { 
       currentQuestion: 0,
       correctAnswers: 0,
-      show: 'question'
+      show: 'question',
+      showResults: false
     };
     this.showQuestionOrAnswer = this.showQuestionOrAnswer.bind(this);
-    this.correct = this.correct.bind(this);
-    this.incorrect = this.incorrect.bind(this);
+    this.restartQuiz = this.restartQuiz.bind(this);
   }
 
   showQuestionOrAnswer() {
@@ -26,23 +26,33 @@ class QuizScreen extends Component {
     }
   }
 
-  correct() {
+  userAnswered(answer) {
     const rightAnswer = this.props.questions[this.state.currentQuestion].answer;
-    if(rightAnswer === 'Correct' || rightAnswer === 'Yes') {
-      this.setState({ correctAnswers: this.state.correctAnswers + 1 });
+    if(answer === 'correct') {
+      if(rightAnswer === 'Correct' || rightAnswer === 'Yes') {
+        this.setState({ correctAnswers: this.state.correctAnswers + 1 });
+      }
+    } else if(answer === 'incorrect') {
+      if(rightAnswer === 'Incorrect' || rightAnswer === 'No') {
+        this.setState({ correctAnswers: this.state.correctAnswers + 1 });
+      }
     }
-    this.setState({ currentQuestion: this.state.currentQuestion + 1 });
+    
+    if(this.state.currentQuestion === this.props.questions.length -1) {
+      this.setState({ showResults: true });
+    } else {
+      this.setState({ currentQuestion: this.state.currentQuestion + 1 });
+    }
   }
 
-  incorrect() {
-    const rightAnswer = this.props.questions[this.state.currentQuestion].answer;
-    if(rightAnswer === 'Incorrect' || rightAnswer === 'No') {
-      this.setState({ correctAnswers: this.state.correctAnswers + 1 });
-    }
-    this.setState({ currentQuestion: this.state.currentQuestion + 1 });
+  restartQuiz() {
+    this.setState({
+      currentQuestion: 0,
+      correctAnswers: 0,
+      show: 'question',
+      showResults: false
+    });
   }
-
-
 
   render() { 
     if(this.props.questions.length === 0) {
@@ -53,6 +63,16 @@ class QuizScreen extends Component {
       )
     }
 
+    if(this.state.showResults) {
+      return (
+        <View style={styles.resultCard}>
+          <Text style={styles.resultCardText}>Total questions answered: {this.props.questions.length}</Text>
+          <Text style={styles.resultCardText}>Correct Answers: {this.state.correctAnswers}</Text>
+          <Button text='Restart' func={this.restartQuiz} />
+        </View>
+      )
+    }
+    
     const showingCard = this.props.questions[this.state.currentQuestion];
 
     return (
@@ -81,8 +101,12 @@ class QuizScreen extends Component {
           </TouchableWithoutFeedback>
 
           <View>
-            <Button text='Correct' func={this.correct}/>
-            <Button text='Incorrect' func={this.incorrect}/>
+            <Button text='Correct' func={() => {
+              this.userAnswered('correct')
+            }}/>
+            <Button text='Incorrect' func={() => {
+              this.userAnswered('incorrect')
+            }}/>
           </View>
         </View>
       </View>
@@ -101,6 +125,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     textAlign: 'center'
+  },
+  resultCard: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  resultCardText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10
   },
   quizProgress: {
     flexDirection: 'row',
