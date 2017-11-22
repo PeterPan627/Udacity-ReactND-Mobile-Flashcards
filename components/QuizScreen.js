@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native';
+import { 
+  View, 
+  Text, 
+  TouchableWithoutFeedback,
+  AsyncStorage, 
+  StyleSheet } from 'react-native';
+import { Notifications } from 'expo';
+import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { gray, blueDark, blueLight } from '../utils/colors';
-import { setLocalNotification } from '../utils/notifications';
+import { setLocalNotification, NOTIFICATION_KEY } from '../utils/notifications';
 import Button from './Button';
 
 class QuizScreen extends Component {
@@ -52,6 +59,9 @@ class QuizScreen extends Component {
       show: 'question',
       showResults: false
     });
+
+    AsyncStorage.removeItem(NOTIFICATION_KEY)
+      .then(Notifications.cancelAllScheduledNotificationsAsync)    
   }
 
   render() { 
@@ -69,6 +79,7 @@ class QuizScreen extends Component {
           <Text style={styles.resultCardText}>Total questions answered: {this.props.questions.length}</Text>
           <Text style={styles.resultCardText}>Correct Answers: {this.state.correctAnswers}</Text>
           <Button text='Restart' func={this.restartQuiz} />
+          <Button text='Go Back' func={() => this.props.navigation.dispatch(NavigationActions.back())} />
         </View>
       )
     }

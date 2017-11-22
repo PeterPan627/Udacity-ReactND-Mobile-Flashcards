@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native'
 
-const STORAGE_KEY = 'MobileFlashcards';
+const STORAGE_KEY = 'Mobile_Flashcards:decks';
 
 const startingData = {
   React: {
@@ -24,7 +24,7 @@ const startingData = {
         answer: 'Yes'
       }, 
       { 
-        questions: 'JavaScript is considered a "weakly typed" or "untyped" language?',
+        question: 'JavaScript is considered a weakly typed (or untyped) language?',
         answer: 'Correct'
       }
     ]
