@@ -5,17 +5,11 @@ import { gray } from '../utils/colors';
 import Button from './Button';
 
 class IndividualDeckScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.startQuiz = this.startQuiz.bind(this);
-    this.addCard = this.addCard.bind(this);
-  }
-
-  startQuiz() {
+  startQuiz = () => {
     this.props.navigation.navigate('Quiz', { deck: this.props.deck.title } );
   }
 
-  addCard() {
+  addCard = () => {
     this.props.navigation.navigate('AddCard', { deck: this.props.deck.title });
   }
   

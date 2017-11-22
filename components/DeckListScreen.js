@@ -6,18 +6,13 @@ import { getAllDecks } from '../actions';
 import DeckListItem from './DeckListItem';
 
 class DeckListScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.navigateToDeck = this.navigateToDeck.bind(this);
-  }
-
   componentDidMount() {
     this.props.getAllDecks();
   }
 
   _keyExtractor = (item, index) => index;
 
-  navigateToDeck(deck) {
+  navigateToDeck = (deck) => {
     this.props.navigation.navigate('IndividualDeck', { deck });
   }
 

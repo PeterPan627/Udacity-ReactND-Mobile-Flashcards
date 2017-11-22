@@ -9,18 +9,14 @@ import { addNewCard } from '../actions';
 import Button from './Button';
 
 class AddCardScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      question: 'Question',
-      answer: 'Answer',
-      questionTooShort: false,
-      answerTooShort: false
-    };
-    this.createCard = this.createCard.bind(this);
-  }
+  state = { 
+    question: 'Question',
+    answer: 'Answer',
+    questionTooShort: false,
+    answerTooShort: false
+  };
 
-  createCard() {
+  createCard = () => {
     if(this.state.question.length > 6 && this.state.answer.length > 1) {
       const cardObj = {
         question: this.state.question,

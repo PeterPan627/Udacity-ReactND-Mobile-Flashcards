@@ -9,16 +9,12 @@ import { addNewDeck } from '../actions';
 import Button from './Button';
 
 class AddDeckScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      title: 'Title',
-      tooShort: false
-    };
-    this.createDeck = this.createDeck.bind(this);
-  }
+  state = { 
+    title: 'Title',
+    tooShort: false
+  };
 
-  createDeck() {
+  createDeck = () => {
     if(this.state.title.length > 3) {
       saveDeckTitle(this.state.title);
       const deckObj = {

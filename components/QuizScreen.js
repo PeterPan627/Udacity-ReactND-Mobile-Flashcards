@@ -9,23 +9,45 @@ import { Notifications } from 'expo';
 import { NavigationActions } from 'react-navigation';
 import { connect } from 'react-redux';
 import { gray, blueDark, blueLight } from '../utils/colors';
-import { setLocalNotification, NOTIFICATION_KEY } from '../utils/notifications';
+import { setLocalNotification, clearLocalNotification, NOTIFICATION_KEY } from '../utils/notifications';
 import Button from './Button';
 
-class QuizScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { 
-      currentQuestion: 0,
-      correctAnswers: 0,
-      show: 'question',
-      showResults: false
-    };
-    this.showQuestionOrAnswer = this.showQuestionOrAnswer.bind(this);
-    this.restartQuiz = this.restartQuiz.bind(this);
-  }
+const NoCards = () => (
+  <View style={styles.noCards}>
+    <Text style={styles.noCardsText}>This deck has no question cards.</Text>
+  </View>
+);
 
-  showQuestionOrAnswer() {
+const ResultScreen = (props) => (
+  <View style={styles.resultCard}>
+    <Text style={styles.resultCardText}>Total questions answered: {props.totalAnswered}</Text>
+    <Text style={styles.resultCardText}>Correct Answers: {props.correct}</Text>
+    <Button text='Restart' func={props.restart} />
+    <Button text='Go Back' func={props.goBack} />
+  </View>
+);
+
+const ShowQuestionOrAnswer = (props) => (
+  <TouchableWithoutFeedback onPress={props.toggle}>
+    <View>
+      {
+        props.current == 'question'
+        ? <Text>Show Answer</Text>
+        : <Text>Show Question</Text>
+      }
+    </View>
+  </TouchableWithoutFeedback>
+)
+
+class QuizScreen extends Component {
+  state = { 
+    currentQuestion: 0,
+    correctAnswers: 0,
+    show: 'question',
+    showResults: false
+  };
+
+  showQuestionOrAnswer = () => {
     if(this.state.show === 'question') {
       this.setState({ show: 'answer' });
     } else if(this.state.show === 'answer') {
@@ -52,7 +74,7 @@ class QuizScreen extends Component {
     }
   }
 
-  restartQuiz() {
+  restartQuiz = () => {
     this.setState({
       currentQuestion: 0,
       correctAnswers: 0,
@@ -60,28 +82,28 @@ class QuizScreen extends Component {
       showResults: false
     });
 
-    AsyncStorage.removeItem(NOTIFICATION_KEY)
-      .then(Notifications.cancelAllScheduledNotificationsAsync)    
+    clearLocalNotification()
+      .then(setLocalNotification)   
+  }
+
+  goBack = () => {
+    this.props.navigation.dispatch(NavigationActions.back());
   }
 
   render() { 
     if(this.props.questions.length === 0) {
-      return (
-        <View style={styles.noCards}>
-          <Text style={styles.noCardsText}>This deck has no question cards.</Text>
-        </View>
-      )
+      return <NoCards/>
     }
 
     if(this.state.showResults) {
       return (
-        <View style={styles.resultCard}>
-          <Text style={styles.resultCardText}>Total questions answered: {this.props.questions.length}</Text>
-          <Text style={styles.resultCardText}>Correct Answers: {this.state.correctAnswers}</Text>
-          <Button text='Restart' func={this.restartQuiz} />
-          <Button text='Go Back' func={() => this.props.navigation.dispatch(NavigationActions.back())} />
-        </View>
-      )
+        <ResultScreen 
+          totalAnswered={this.props.questions.length}
+          correct={this.state.correctAnswers}
+          restart={this.restartQuiz}
+          goBack={this.goBack}
+        />
+      );
     }
     
     const showingCard = this.props.questions[this.state.currentQuestion];
@@ -99,25 +121,13 @@ class QuizScreen extends Component {
             : <Text style={styles.answerText}>{showingCard.answer}</Text>
           }
 
-          <TouchableWithoutFeedback
-            onPress={this.showQuestionOrAnswer}
-          >
-            <View>
-              {
-                this.state.show == 'question'
-                ? <Text>Show Answer</Text>
-                : <Text>Show Question</Text>
-              }
-            </View>
-          </TouchableWithoutFeedback>
-
+          <ShowQuestionOrAnswer
+            toggle={this.showQuestionOrAnswer}
+            current={this.state.show}
+          />
           <View>
-            <Button text='Correct' func={() => {
-              this.userAnswered('correct')
-            }}/>
-            <Button text='Incorrect' func={() => {
-              this.userAnswered('incorrect')
-            }}/>
+            <Button text='Correct' func={() => this.userAnswered('correct')}/>
+            <Button text='Incorrect' func={() => this.userAnswered('incorrect')}/>
           </View>
         </View>
       </View>

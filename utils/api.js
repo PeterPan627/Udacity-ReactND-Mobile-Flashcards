@@ -1,4 +1,4 @@
-import { AsyncStorage } from 'react-native'
+import { AsyncStorage } from 'react-native';
 
 const STORAGE_KEY = 'Mobile_Flashcards:decks';
 

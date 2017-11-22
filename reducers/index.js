@@ -1,4 +1,3 @@
-import { combineReducers } from 'redux';
 import { GET_ALL_DECKS, ADD_NEW_DECK, ADD_NEW_CARD } from '../actions';
 
 export default function deckReducer(state = {}, action) {
