@@ -2,19 +2,20 @@ import React, { Component } from 'react';
 import { View, Text, TouchableWithoutFeedback, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { gray, blueDark, blueLight } from '../utils/colors';
-import { setLocalNotification } from './utils/notifications';
+import { setLocalNotification } from '../utils/notifications';
 import Button from './Button';
 
 class QuizScreen extends Component {
   constructor(props) {
     super(props);
     this.state = { 
-      questions: [],
       currentQuestion: 0,
       correctAnswers: 0,
       show: 'question'
-    }
+    };
     this.showQuestionOrAnswer = this.showQuestionOrAnswer.bind(this);
+    this.correct = this.correct.bind(this);
+    this.incorrect = this.incorrect.bind(this);
   }
 
   showQuestionOrAnswer() {
@@ -26,25 +27,45 @@ class QuizScreen extends Component {
   }
 
   correct() {
-    console.log('correct');
+    const rightAnswer = this.props.questions[this.state.currentQuestion].answer;
+    if(rightAnswer === 'Correct' || rightAnswer === 'Yes') {
+      this.setState({ correctAnswers: this.state.correctAnswers + 1 });
+    }
+    this.setState({ currentQuestion: this.state.currentQuestion + 1 });
   }
 
   incorrect() {
-    console.log('incorrect');
+    const rightAnswer = this.props.questions[this.state.currentQuestion].answer;
+    if(rightAnswer === 'Incorrect' || rightAnswer === 'No') {
+      this.setState({ correctAnswers: this.state.correctAnswers + 1 });
+    }
+    this.setState({ currentQuestion: this.state.currentQuestion + 1 });
   }
 
-  render() {
+
+
+  render() { 
+    if(this.props.questions.length === 0) {
+      return (
+        <View style={styles.noCards}>
+          <Text style={styles.noCardsText}>This deck has no question cards.</Text>
+        </View>
+      )
+    }
+
+    const showingCard = this.props.questions[this.state.currentQuestion];
+
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.quizProgress}>
-          <Text>Card 2/7</Text>
+          <Text>Card {this.state.currentQuestion + 1}/{this.props.questions.length}</Text>
         </View>
 
         <View style={styles.quizCard}>
           {
             this.state.show == 'question'
-            ? <Text style={styles.questionText}>Question ??</Text>
-            : <Text style={styles.answerText}>Answer</Text>
+            ? <Text style={styles.questionText}>{showingCard.question}</Text>
+            : <Text style={styles.answerText}>{showingCard.answer}</Text>
           }
 
           <TouchableWithoutFeedback
@@ -69,12 +90,18 @@ class QuizScreen extends Component {
   }
 }
 
-/*
-clearLocalNotification()
-      .then(setLocalNotification)
-*/
 
 const styles = StyleSheet.create({
+  noCards: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  noCardsText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    textAlign: 'center'
+  },
   quizProgress: {
     flexDirection: 'row',
     justifyContent: 'flex-end',
@@ -110,7 +137,7 @@ const styles = StyleSheet.create({
 });
 
 function mapStateToProps(state, ownProps) {
-  return { deck: state[ownProps.navigation.state.params.deck] };
+  return { questions: state[ownProps.navigation.state.params.deck].questions };
 }
 
 export default connect(mapStateToProps)(QuizScreen);
