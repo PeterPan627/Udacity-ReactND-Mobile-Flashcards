@@ -24,8 +24,8 @@ class AddDeckScreen extends Component {
         }
       };
       this.props.addNewDeck(deckObj);
+      this.props.navigation.navigate('IndividualDeck', { deck: this.state.title });
       this.setState({ title: '' });
-      this.props.navigation.navigate('Decks');
     } else {
       this.setState({ tooShort: true })
     }
@@ -38,7 +38,7 @@ class AddDeckScreen extends Component {
         <TextInput
           underlineColorAndroid='#2962ff'
           style={styles.titleInput}
-          onChangeText={(text) => this.setState({ title: text })}
+          onChangeText={title => this.setState({ title })}
           value={this.state.title}
           onFocus={() => this.setState({ title: '', tooShort: false })}
         />

@@ -5,12 +5,10 @@ import { gray } from '../utils/colors';
 import Button from './Button';
 
 class IndividualDeckScreen extends Component {
-  startQuiz = () => {
-    this.props.navigation.navigate('Quiz', { deck: this.props.deck.title } );
-  }
-
-  addCard = () => {
-    this.props.navigation.navigate('AddCard', { deck: this.props.deck.title });
+  navigate = (screen) => {
+    this.props.navigation.navigate(screen, {
+      deck: this.props.deck.title
+    })
   }
   
   render() {
@@ -22,8 +20,8 @@ class IndividualDeckScreen extends Component {
           <Text style={styles.cardNumber}>This deck has {deck.questions.length} cards</Text>
         </View>
         <View>
-          <Button text='Start Quiz' func={this.startQuiz}/>
-          <Button text='Add Card' func={this.addCard}/>
+          <Button text='Start Quiz' func={() => this.navigate('Quiz')}/>
+          <Button text='Add Card' func={() => this.navigate('AddCard')}/>
         </View>
       </View>
     );

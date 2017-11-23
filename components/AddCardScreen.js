@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { NavigationActions } from 'react-navigation';
 import { addCardToDeck } from '../utils/api';
@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { addNewCard } from '../actions';
 import Button from './Button';
 
-class AddCardScreen extends Component {
+class AddCardScreen extends PureComponent {
   state = { 
     question: 'Question',
     answer: 'Answer',
@@ -47,7 +47,7 @@ class AddCardScreen extends Component {
         <TextInput
           underlineColorAndroid='#2962ff'
           style={styles.input}
-          onChangeText={(text) => this.setState({ question: text })}
+          onChangeText={question => this.setState({ question })}
           value={this.state.question}
           onFocus={() => this.setState({ question: '', questionTooShort: false })}
         />
@@ -55,7 +55,7 @@ class AddCardScreen extends Component {
         <TextInput
           underlineColorAndroid='#2962ff'
           style={styles.input}
-          onChangeText={(text) => this.setState({ answer: text })}
+          onChangeText={answer => this.setState({ answer })}
           value={this.state.answer}
           onFocus={() => this.setState({ answer: '', answerTooShort: false })}
         />

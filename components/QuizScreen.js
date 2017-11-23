@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { 
   View, 
   Text, 
@@ -39,7 +39,7 @@ const ShowQuestionOrAnswer = (props) => (
   </TouchableWithoutFeedback>
 )
 
-class QuizScreen extends Component {
+class QuizScreen extends PureComponent {
   state = { 
     currentQuestion: 0,
     correctAnswers: 0,
@@ -48,11 +48,11 @@ class QuizScreen extends Component {
   };
 
   showQuestionOrAnswer = () => {
-    if(this.state.show === 'question') {
-      this.setState({ show: 'answer' });
-    } else if(this.state.show === 'answer') {
-      this.setState({ show: 'question' });
-    }
+    const show = (this.state.show) === 'question'
+      ? 'answer'
+      : 'question'
+  
+    this.setState({ show });
   }
 
   userAnswered(answer) {
