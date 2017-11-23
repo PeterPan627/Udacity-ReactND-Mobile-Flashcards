@@ -56,15 +56,8 @@ class QuizScreen extends PureComponent {
   }
 
   userAnswered(answer) {
-    const rightAnswer = this.props.questions[this.state.currentQuestion].answer;
     if(answer === 'correct') {
-      if(rightAnswer === 'Correct' || rightAnswer === 'Yes') {
-        this.setState({ correctAnswers: this.state.correctAnswers + 1 });
-      }
-    } else if(answer === 'incorrect') {
-      if(rightAnswer === 'Incorrect' || rightAnswer === 'No') {
-        this.setState({ correctAnswers: this.state.correctAnswers + 1 });
-      }
+      this.setState({ correctAnswers: this.state.correctAnswers + 1 });
     }
     
     if(this.state.currentQuestion === this.props.questions.length -1) {
